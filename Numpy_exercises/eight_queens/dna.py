@@ -63,7 +63,24 @@ class Dna:
         Function thar receives two individuals and returns an array with
         a randomic mixture of the parents' genes
         """
-        return 'cross'
+        child = np.union1d(father,mother)
+        child_genes = [0]
+
+        mutation_rate = self.mutation * 100
+
+        while len(child_genes) < 8:
+            child_genes = np.unique(random.choice(child, size=8))
+
+            # mutation
+
+            m  = random.choice(100)
+            if m > mutation_rate:
+                child_genes[random.choice(len(child_genes))] = random.choice(63)
+
+            # Ensuring that there are no repeated numbers
+            child_genes = np.unique(child_genes)
+
+        return child_genes
 
 
 
