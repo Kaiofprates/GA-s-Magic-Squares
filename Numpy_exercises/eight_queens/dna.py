@@ -24,8 +24,8 @@ class Dna:
         """
         pop = []
         for i in range(self.population):
-            pop.append(random.choice(np.arange(64), size =(8)))
-        return np.vstack(pop)
+            pop.append(Dna(genes = random.choice(np.arange(64), size =(8)), mutation = self.mutation))
+        return pop
 
     def fitness(self):
         """
@@ -80,7 +80,7 @@ class Dna:
             # Ensuring that there are no repeated numbers
             child_genes = np.unique(child_genes)
 
-        return child_genes
+        return Dna( genes=child_genes, mutation=self.mutation)
 
 
 
