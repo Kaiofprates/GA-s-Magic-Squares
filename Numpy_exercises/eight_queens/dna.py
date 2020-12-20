@@ -9,13 +9,14 @@ class Dna:
     no two queens share the same row
     """
 
-    def __init__(self,mutation = 0.5,population = 5, genes = random.choice(np.arange(64),size=(8))):
+    def __init__(self,mutation = 0.5,population = 5, genes = random.choice(np.arange(64),size=(8)), flag = False):
 
         self.mutation = mutation
         self.population = population
         self.table = np.arange(64).reshape(8,8)
         self.genes = genes
         self.fit  = 0
+        self.flag = flag
 
     def randomic_population(self):
         """
@@ -56,6 +57,10 @@ class Dna:
             if len(axis2) >= 2:
                 self.fit = self.fit + 1
 
+            column = [ n for n in self.table[:,i] if (n == -1)]
+            if len(column) >= 2:
+                self.fit = self.fit + 1
+
         return self.fit
 
     def cross_over(self, father, mother):
@@ -73,12 +78,13 @@ class Dna:
 
             # mutation
 
-            m  = random.choice(100)
-            if m > mutation_rate:
-                child_genes[random.choice(len(child_genes))] = random.choice(63)
+            # m  = random.choice(100)
+            # if m > mutation_rate and self.flag:
+            #     child_genes[random.choice(len(child_genes))] = random.choice(63)
 
             # Ensuring that there are no repeated numbers
-            child_genes = np.unique(child_genes)
+
+            #child_genes = np.unique(child_genes)
 
         return Dna( genes=child_genes, mutation=self.mutation)
 
